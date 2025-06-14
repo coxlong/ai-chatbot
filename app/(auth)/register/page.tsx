@@ -42,6 +42,11 @@ export default function Page() {
       setIsSuccessful(true);
       updateSession();
       router.refresh();
+    } else if (state.status === 'disabled_registration') {
+      toast({
+        type: 'error',
+        description: 'Registration is currently disabled.',
+      });
     }
   }, [state]);
 

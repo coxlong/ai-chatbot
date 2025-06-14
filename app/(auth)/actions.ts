@@ -48,7 +48,8 @@ export interface RegisterActionState {
     | 'success'
     | 'failed'
     | 'user_exists'
-    | 'invalid_data';
+    | 'invalid_data'
+    | 'disabled_registration';
 }
 
 export const register = async (
@@ -56,6 +57,9 @@ export const register = async (
   formData: FormData,
 ): Promise<RegisterActionState> => {
   try {
+    if (process.env.DISABLE_REGISTRATION === 'true') {
+      return { status: 'disabled_registration' };
+    }
     const validatedData = authFormSchema.parse({
       email: formData.get('email'),
       password: formData.get('password'),
