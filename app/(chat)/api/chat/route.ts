@@ -202,6 +202,7 @@ export async function POST(request: Request) {
     if (error instanceof ChatSDKError) {
       return error.toResponse();
     }
+    return new ChatSDKError('offline:stream').toResponse();
   }
 }
 
