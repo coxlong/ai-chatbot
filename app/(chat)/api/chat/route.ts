@@ -234,9 +234,11 @@ export async function POST(request: Request) {
       return new Response(stream);
     }
   } catch (error) {
+    console.log('Error in POST /api/chat:', error);
     if (error instanceof ChatSDKError) {
       return error.toResponse();
     }
+    return new ChatSDKError('offline:stream').toResponse();
   }
 }
 
