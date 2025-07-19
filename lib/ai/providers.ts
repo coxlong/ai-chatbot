@@ -11,6 +11,12 @@ import {
   titleModel,
 } from './models.test';
 import { isTestEnvironment } from '../constants';
+import { createDeepSeek } from '@ai-sdk/deepseek';
+
+const deepseek = createDeepSeek({
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: process.env.OPENAI_API_BASE_URL,
+});
 
 export const myProvider = isTestEnvironment
   ? customProvider({
@@ -23,13 +29,12 @@ export const myProvider = isTestEnvironment
     })
   : customProvider({
       languageModels: {
-        'chat-model': xai('grok-2-vision-1212'),
-        'chat-model-reasoning': wrapLanguageModel({
-          model: xai('grok-3-mini-beta'),
-          middleware: extractReasoningMiddleware({ tagName: 'think' }),
-        }),
-        'title-model': xai('grok-2-1212'),
-        'artifact-model': xai('grok-2-1212'),
+        'chat-model': deepseek(process.env.CHAT_MODEL || ''),
+        'chat-model-reasoning': deepseek(
+          process.env.CHAT_MODEL_REASONING || '',
+        ),
+        'title-model': deepseek(process.env.TITLE_MODEL || ''),
+        'artifact-model': deepseek(process.env.ARTIFACT_MODEL || ''),
       },
       imageModels: {
         'small-model': xai.imageModel('grok-2-image'),

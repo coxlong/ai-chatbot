@@ -98,7 +98,7 @@ export async function POST(request: Request) {
       differenceInHours: 24,
     });
 
-    if (messageCount > entitlementsByUserType[userType].maxMessagesPerDay) {
+    if (messageCount >= entitlementsByUserType[userType].maxMessagesPerDay) {
       return new ChatSDKError('rate_limit:chat').toResponse();
     }
 
@@ -219,9 +219,11 @@ export async function POST(request: Request) {
       return new Response(stream.pipeThrough(new JsonToSseTransformStream()));
     }
   } catch (error) {
+    console.log('Error in POST /api/chat:', error);
     if (error instanceof ChatSDKError) {
       return error.toResponse();
     }
+    return new ChatSDKError('offline:stream').toResponse();
   }
 }
 

@@ -1,0 +1,43 @@
+# Dependencies
+node_modules
+npm-debug.log*
+pnpm-debug.log*
+
+# Build output
+.next
+out
+
+# Environment files
+.env*.local
+
+# Version control
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage
+.nyc_output
+
+# Logs
+*.log
+
+# Runtime
+.pids
+*.pid
+*.seed
+*.pid.lock
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Documentation
+README.md
